@@ -1,6 +1,5 @@
 function MenuCreator(itemType) {
   this.itemType = itemType;
-  this.name = itemType.name;
 }
 
 MenuCreator.prototype.getType = function () {
@@ -8,7 +7,7 @@ MenuCreator.prototype.getType = function () {
 };
 
 MenuCreator.prototype.getName = function () {
-  return this.name;
+  return this.itemType.name;
 };
 MenuCreator.prototype.calculatePrice = function () {
   return this.itemType.price;
@@ -50,17 +49,27 @@ Hamburger.STUFFING_POTATO = {
   calories: 10,
 };
 
-Hamburger.prototype.getSize = function () {
+Hamburger.prototype.getType = function () {
   return this.itemType;
 };
 Hamburger.prototype.getStuffing = function () {
   return this.stuffing;
 };
+Hamburger.prototype.getName = function () {
+  if (this.getStuffing() !== undefined) {
+    return (
+      this.getType().name + " " + "plus stuffing: " + this.getStuffing().name
+    );
+  } else {
+    return this.getType().name;
+  }
+};
+
 Hamburger.prototype.calculatePrice = function () {
-  return this.getSize().price + this.getStuffing().price;
+  return this.getType().price + this.getStuffing().price;
 };
 Hamburger.prototype.calculateCalories = function () {
-  return this.getSize().calories + this.getStuffing().calories;
+  return this.getType().calories + this.getStuffing().calories;
 };
 
 function Salad(type, weight) {
@@ -168,7 +177,7 @@ Order.prototype.calculateTotalPrice = function () {
       totalPrice += item.calculatePrice();
     });
   }
-  console.log("Total price: " + totalPrice + "tugricks");
+  console.log("Total price: " + totalPrice + " " + "tugricks");
   return totalPrice;
 };
 
@@ -197,7 +206,7 @@ var someHamburger = new Hamburger(
 var someSalad = new Salad(Salad.CAESAR, 150);
 var someDrink = new Drink(Drink.COFFEE);
 var someOrder = new Order(someHamburger, someSalad, someDrink);
-someHamburger.getSize();
+someHamburger.getType();
 someHamburger.getStuffing();
 someHamburger.calculatePrice();
 someSalad.getWeight();
