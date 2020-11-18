@@ -1,3 +1,5 @@
+
+ 
 function MenuCreator(itemType) {
   this.itemType = itemType;
 }
@@ -150,8 +152,12 @@ Order.prototype.getDishes = function () {
 
 Order.prototype.addPositionToOrder = function (item) {
   if (!this.getPaid()) {
-    this.dishes.push(item);
-    console.log("Position is added.");
+    if (item !== undefined) {
+      this.dishes.push(item);
+      console.log("Position is added.");
+    } else {
+      console.log("There is no item for adding!")
+    }
   } else {
     console.log("Сhanges are not possible. The order has been paid.");
   }
